@@ -15,20 +15,29 @@ defmodule WordFrequencyFinder do
   end
 
   def sort_by_most_frequent(words_with_frequency) do
-    select_most_frequent(Map.to_list(words_with_frequency))
+    print_in_order_of_frequency(Map.to_list(words_with_frequency))
   end
 
-  def select_most_frequent([]), do: 0
-  def select_most_frequent(words_with_frequency) do
-    most_frequent_word = words_with_frequency
-    |> Enum.max_by(fn{_, frequency} ->
-      frequency
-    end)
-    print_word_with_frequency(most_frequent_word)
-    select_most_frequent(List.delete(words_with_frequency, most_frequent_word))
+  def print_in_order_of_frequency([]), do: 0
+  def print_in_order_of_frequency(words_with_frequency) do
+    words_with_frequency
+    |> select_most_frequent_word
+    |> print_most_frequent_word
+    words_with_frequency
+    |> remove_most_frequent_word
+    |> print_in_order_of_frequency
   end
 
-  defp print_word_with_frequency({word, frequency}) do
+  def remove_most_frequent_word(words_with_frequency) do
+    List.delete(words_with_frequency, select_most_frequent_word(words_with_frequency))
+  end
+
+  def select_most_frequent_word(words_with_frequency) do
+    words_with_frequency
+    |> Enum.max_by(fn{_, frequency} -> frequency end)
+  end
+
+  defp print_most_frequent_word({word, frequency}) do
     IO.puts "#{word}: #{frequency}"
   end
 end
