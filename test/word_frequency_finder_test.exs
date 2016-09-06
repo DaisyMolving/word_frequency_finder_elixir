@@ -7,6 +7,10 @@ defmodule WordFrequencyFinderTest do
     assert WordFrequencyFinder.split_words("hello hello there, how many are there?") ==  ["hello", "hello", "there", "how", "many", "are", "there"] 
   end
 
+  test "removes stop words from list of split text" do
+    assert WordFrequencyFinder.remove_stop_words(["she", "said", "he", "was", "crazy"], ["she", "said", "he", "was"]) == ["crazy"]
+  end
+
   test "tallies the words in a map, counting their instances" do
     assert WordFrequencyFinder.tally_words(["hello", "hello", "there", "how", "many", "are", "there"]) == %{"hello"=> 2, "there" => 2, "how" => 1, "many" => 1, "are" => 1}
   end

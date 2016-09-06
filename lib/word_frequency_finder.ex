@@ -4,6 +4,12 @@ defmodule WordFrequencyFinder do
     String.split(text, ~r/(\W+)/, trim: true)
   end
 
+  def remove_stop_words(word_list, stop_words) do
+    Enum.drop_while(word_list, fn(word) -> 
+     Enum.member?(stop_words, word)
+    end)
+  end
+
   def tally_words(word_list) do
     tally_words(%{}, word_list)
   end
