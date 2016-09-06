@@ -15,7 +15,8 @@ defmodule WordFrequencyFinder do
   end
 
   def sort_by_most_frequent(words_with_frequency) do
-    print_in_order_of_frequency(Map.to_list(words_with_frequency))
+    Map.to_list(words_with_frequency)
+    |> print_in_order_of_frequency
   end
 
   def print_in_order_of_frequency([]), do: 0
@@ -29,7 +30,8 @@ defmodule WordFrequencyFinder do
   end
 
   def remove_most_frequent_word(words_with_frequency) do
-    List.delete(words_with_frequency, select_most_frequent_word(words_with_frequency))
+    words_with_frequency
+    |> List.delete(select_most_frequent_word(words_with_frequency))
   end
 
   def select_most_frequent_word(words_with_frequency) do
@@ -40,4 +42,5 @@ defmodule WordFrequencyFinder do
   defp print_most_frequent_word({word, frequency}) do
     IO.puts "#{word}: #{frequency}"
   end
+
 end
