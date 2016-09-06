@@ -24,9 +24,11 @@ defmodule WordFrequencyFinder do
     |> Enum.max_by(fn{_, frequency} ->
       frequency
     end)
-    {word, highest_frequency} = most_frequent_word
-    IO.puts "#{word}: #{highest_frequency}"
+    print_word_with_frequency(most_frequent_word)
     select_most_frequent(List.delete(words_with_frequency, most_frequent_word))
   end
 
+  defp print_word_with_frequency({word, frequency}) do
+    IO.puts "#{word}: #{frequency}"
+  end
 end
