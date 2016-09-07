@@ -4,14 +4,14 @@ defmodule WordFrequencyFinder do
     split_words(text) 
     |> remove_stop_words(split_words(stop_words))
     |> tally_words
-    |> sort_by_most_frequent
+    |> convert_to_list
     |> print_in_order_of_frequency
   end
 
   def split_words(text) do
     String.split(text, ~r/(\W+)/, trim: true) 
     |> Enum.map(fn(word) ->
-      String.downcase(word)
+      downcase_word(word)
     end)
   end
 
@@ -31,10 +31,6 @@ defmodule WordFrequencyFinder do
     |> tally_words(next_words)
   end
 
-  def sort_by_most_frequent(words_with_frequency) do
-    Map.to_list(words_with_frequency)
-  end
-
   def print_in_order_of_frequency([]), do: 0
   def print_in_order_of_frequency(words_with_frequency) do
     words_with_frequency
@@ -45,12 +41,20 @@ defmodule WordFrequencyFinder do
     |> print_in_order_of_frequency
   end
 
-  def remove_most_frequent_word(words_with_frequency) do
+  defp downcase_word(word) do
+    String.downcase(word)
+  end
+
+  defp convert_to_list(words_with_frequency) do
+    Map.to_list(words_with_frequency)
+  end
+
+  defp remove_most_frequent_word(words_with_frequency) do
     words_with_frequency
     |> List.delete(select_most_frequent_word(words_with_frequency))
   end
 
-  def select_most_frequent_word(words_with_frequency) do
+  defp select_most_frequent_word(words_with_frequency) do
     words_with_frequency
     |> Enum.max_by(fn{_, frequency} -> frequency end)
   end
