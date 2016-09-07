@@ -1,10 +1,12 @@
 defmodule WordFrequencyFinder do
 
   def start_frequency_search(text, stop_words) do
-    sort_by_most_frequent(tally_words(remove_stop_words(split_words(text), split_words(stop_words))))
+    split_words(text) 
+    |> remove_stop_words(split_words(stop_words))
+    |> tally_words
+    |> sort_by_most_frequent
+    |> print_in_order_of_frequency
   end
-
-
 
   def split_words(text) do
     String.split(text, ~r/(\W+)/, trim: true) 
@@ -31,7 +33,6 @@ defmodule WordFrequencyFinder do
 
   def sort_by_most_frequent(words_with_frequency) do
     Map.to_list(words_with_frequency)
-    |> print_in_order_of_frequency
   end
 
   def print_in_order_of_frequency([]), do: 0
