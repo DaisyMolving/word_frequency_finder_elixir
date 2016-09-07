@@ -1,6 +1,6 @@
 defmodule WordFrequencyFinder do
 
-  def start_frequency_search(text, stop_words) do
+  def run_frequency_search(text, stop_words) do
     split_words(text) 
     |> remove_stop_words(split_words(stop_words))
     |> tally_words
