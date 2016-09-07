@@ -1,7 +1,16 @@
 defmodule WordFrequencyFinder do
 
+  def start_frequency_search(text, stop_words) do
+    sort_by_most_frequent(tally_words(remove_stop_words(split_words(text), split_words(stop_words))))
+  end
+
+
+
   def split_words(text) do
-    String.split(text, ~r/(\W+)/, trim: true)
+    String.split(text, ~r/(\W+)/, trim: true) 
+    |> Enum.map(fn(word) ->
+      String.downcase(word)
+    end)
   end
 
   def remove_stop_words(word_list, stop_words) do

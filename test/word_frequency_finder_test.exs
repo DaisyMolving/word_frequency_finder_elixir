@@ -25,4 +25,10 @@ defmodule WordFrequencyFinderTest do
     end) == "how: 4\nmany: 2\nare: 1\nhello: 1\nthere: 1\n"
   end
 
+  test "given large text and stop_words, prints final output" do
+    assert capture_io(fn ->
+      WordFrequencyFinder.start_frequency_search("Once upon a time there was a dragon dragon dragon dragon who guarded a castle made of gold gold gold. He was very fearsome.", "once, a, there, was, a, who, of, he, very")
+    end) == "dragon: 4\ngold: 3\ncastle: 1\nfearsome: 1\nguarded: 1\nmade: 1\ntime: 1\nupon: 1\n"
+  end
+
 end
