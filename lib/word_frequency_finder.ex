@@ -5,8 +5,8 @@ defmodule WordFrequencyFinder do
   end
 
   def remove_stop_words(word_list, stop_words) do
-    Enum.drop_while(word_list, fn(word) -> 
-     Enum.member?(stop_words, word)
+    Enum.filter(word_list, fn(word) -> 
+     Enum.member?(stop_words, word) == false
     end)
   end
 

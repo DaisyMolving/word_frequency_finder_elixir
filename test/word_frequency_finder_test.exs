@@ -12,7 +12,7 @@ defmodule WordFrequencyFinderTest do
   end
 
   test "removes unordered stop words from list of split text" do
-    assert WordFrequencyFinder.remove_stop_words(["a", "girl", "went", "out", "the", "door", "with", "a", "gun"], ["gun", "the", "went", "with", "a"]) == ["girl", "out", "door", "gun"]
+    assert WordFrequencyFinder.remove_stop_words(["a", "girl", "went", "out", "the", "door", "with", "a", "gun"], ["the", "went", "with", "a"]) == ["girl", "out", "door", "gun"]
   end
 
   test "tallies the words in a map, counting their instances" do
