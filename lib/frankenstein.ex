@@ -3,7 +3,11 @@ defmodule Mix.Tasks.Frankenstein do
   import WordFrequencyFinder
 
   def run(_args) do
-    run_frequency_search("Once upon a time there was a dragon dragon dragon dragon who guarded a castle made of gold gold gold. He was very very very fearsome", "once, a, there, was, a, who, of he very")
+    run_frequency_search(load_file("frankenstein.txt"), load_file("stop_words.txt"))
+  end
+
+  def load_file(file) do
+    File.read!(file)
   end
 
 end
