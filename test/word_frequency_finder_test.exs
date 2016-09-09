@@ -4,31 +4,33 @@ defmodule WordFrequencyFinderTest do
   doctest WordFrequencyFinder
 
   test "splits every instance of a word in a list, not including punctuation" do
-    assert WordFrequencyFinder.split_words("hello hello there, how many are there?") ==  ["hello", "hello", "there", "how", "many", "are", "there"] 
+    assert WordFrequencyFinder.split_words("Who is it?") ==  ["who", "is", "it"] 
   end
 
   test "removes ordered stop words from list of split text" do
-    assert WordFrequencyFinder.remove_stop_words(["she", "said", "he", "was", "crazy"], ["she", "said", "he", "was"]) == ["crazy"]
+    assert WordFrequencyFinder.remove_stop_words(["he", "was", "crazy"], ["he", "was"]) == ["crazy"]
   end
 
   test "removes unordered stop words from list of split text" do
-    assert WordFrequencyFinder.remove_stop_words(["a", "girl", "went", "out", "the", "door", "with", "a", "gun"], ["the", "went", "with", "a"]) == ["girl", "out", "door", "gun"]
+    assert WordFrequencyFinder.remove_stop_words(["girl", "with", "a", "gun"], ["a", "with"]) == ["girl", "gun"]
   end
 
   test "tallies the words in a map, counting their instances" do
-    assert WordFrequencyFinder.tally_words(["hello", "hello", "there", "how", "many", "are", "there"]) == %{"hello"=> 2, "there" => 2, "how" => 1, "many" => 1, "are" => 1}
+    assert WordFrequencyFinder.tally_words(["hello", "hello", "there"]) == %{"hello"=> 2, "there" => 1}
   end
 
   test "prints words in order from highest to lowest frequency" do
     assert capture_io(fn ->
-      WordFrequencyFinder.print_in_order_of_frequency([{"hello", 1}, {"there", 1}, {"how", 4}, {"many", 2}, {"are", 1}])
-    end) == "how: 4\nmany: 2\nhello: 1\nthere: 1\nare: 1\n"
+      WordFrequencyFinder.print_in_order_of_frequency([{"hello", 1}, {"how", 4}, {"many", 2}])
+    end) == "how: 4\nmany: 2\nhello: 1\n"
   end
 
   test "given large text and stop_words, prints final output" do
+    input_text = "There was a dragon dragon dragon dragon in a castle made of gold gold gold."
+    stop_words = "a, there, was, in, who, of"
     assert capture_io(fn ->
-      WordFrequencyFinder.run_frequency_search("Once upon a time there was a dragon dragon dragon dragon who guarded a castle made of gold gold gold. He was very fearsome.", "once, a, there, was, a, who, of, he, very")
-    end) == "dragon: 4\ngold: 3\ncastle: 1\nfearsome: 1\nguarded: 1\nmade: 1\ntime: 1\nupon: 1\n"
+      WordFrequencyFinder.run_frequency_search(input_text, stop_words)
+    end) == "dragon: 4\ngold: 3\ncastle: 1\nmade: 1\n"
   end
 
 end
