@@ -30,7 +30,7 @@ defmodule WordFrequencyFinderTest do
     stop_words = "a, there, was, in, who, of"
     assert capture_io(fn ->
       WordFrequencyFinder.run_frequency_search(input_text, stop_words)
-    end) == "dragon: 4\ngold: 3\ncastle: 1\nmade: 1\n"
+    end) == "dragon: 4\ngold: 3\nmade: 1\ncastle: 1\n"
   end
 
 end

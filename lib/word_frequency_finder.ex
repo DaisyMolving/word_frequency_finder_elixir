@@ -31,14 +31,10 @@ defmodule WordFrequencyFinder do
     |> tally_words(next_words)
   end
 
-  def print_in_order_of_frequency([]), do: 0
   def print_in_order_of_frequency(words_with_frequency) do
-    words_with_frequency
-    |> select_most_frequent_word
+    words_with_frequency 
+    |> Enum.sort(fn({_, frequency_1}, {_, frequency_2}) -> frequency_1 > frequency_2 end)
     |> print_most_frequent_word
-    words_with_frequency
-    |> remove_most_frequent_word
-    |> print_in_order_of_frequency
   end
 
   defp downcase_word(word) do
@@ -49,18 +45,10 @@ defmodule WordFrequencyFinder do
     Map.to_list(words_with_frequency)
   end
 
-  defp remove_most_frequent_word(words_with_frequency) do
-    words_with_frequency
-    |> List.delete(select_most_frequent_word(words_with_frequency))
-  end
-
-  defp select_most_frequent_word(words_with_frequency) do
-    words_with_frequency
-    |> Enum.max_by(fn{_, frequency} -> frequency end)
-  end
-
-  defp print_most_frequent_word({word, frequency}) do
+  defp print_most_frequent_word([]), do: 0
+  defp print_most_frequent_word([{word, frequency} | next_word_and_frequency]) do
     IO.puts "#{word}: #{frequency}"
+    print_most_frequent_word(next_word_and_frequency)
   end
 
 end
