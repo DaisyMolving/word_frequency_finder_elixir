@@ -5,7 +5,8 @@ defmodule WordFrequencyFinder do
     |> remove_stop_words(split_words(stop_words))
     |> tally_words
     |> Map.to_list
-    |> print_in_order_of_frequency
+    |> sort_in_order_of_frequency
+    |> print_top_amount(50)
   end
 
   def split_words(text) do
@@ -31,17 +32,16 @@ defmodule WordFrequencyFinder do
     |> tally_words(next_words)
   end
 
-  def print_in_order_of_frequency(words_with_frequency) do
+  def sort_in_order_of_frequency(words_with_frequency) do
     words_with_frequency 
     |> Enum.sort(fn({_, frequency_1}, {_, frequency_2}) -> frequency_1 > frequency_2 end)
-    |> print_most_frequent_word(50)
   end
 
-  defp print_most_frequent_word(_, 0), do: 0
-  defp print_most_frequent_word([], _), do: 0
-  defp print_most_frequent_word([{word, frequency} | next_word_and_frequency], amount_to_print) do
+  def print_top_amount(_, 0), do: 0
+  def print_top_amount([], _), do: 0
+  def print_top_amount([{word, frequency} | next_word_and_frequency], amount_to_print) do
     IO.puts "#{word}: #{frequency}"
-    print_most_frequent_word(next_word_and_frequency, amount_to_print - 1)
+    print_top_amount(next_word_and_frequency, amount_to_print - 1)
   end
 
 end

@@ -19,10 +19,16 @@ defmodule WordFrequencyFinderTest do
     assert WordFrequencyFinder.tally_words(["hello", "hello", "there"]) == %{"hello"=> 2, "there" => 1}
   end
 
-  test "prints words in order from highest to lowest frequency" do
+  test "sorts words in order from highest to lowest frequency" do
+    unsorted_word_freq_list = [{"hello", 1}, {"how", 4}, {"many", 2}]
+    assert WordFrequencyFinder.sort_in_order_of_frequency(unsorted_word_freq_list) == [{"how", 4}, {"many", 2}, {"hello", 1}]
+  end
+
+  test "prints given top amount of words" do
+    sorted_word_freq_list = [{"how", 4}, {"many", 2}, {"hello", 1}]
     assert capture_io(fn ->
-      WordFrequencyFinder.print_in_order_of_frequency([{"hello", 1}, {"how", 4}, {"many", 2}])
-    end) == "how: 4\nmany: 2\nhello: 1\n"
+      WordFrequencyFinder.print_top_amount(sorted_word_freq_list, 2)
+    end) == "how: 4\nmany: 2\n"
   end
 
   test "given large text and stop_words, prints final output" do
