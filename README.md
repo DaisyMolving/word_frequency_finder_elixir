@@ -4,5 +4,11 @@ To run this app, install elixir
 
 Then, within the `word_frequency_finder` directory, run the command:
 
-`mix frankenstein` for FRANKENSTEIN, or `mix beowulf` for BEOWULF.
+`mix frankenstein` or
+
+`mix beowulf` along with the amount of words you want to be in the ranking.
+
+For instance, for the top 50 words from Beowulf the command would be:
+
+`mix beowulf 50`
 
