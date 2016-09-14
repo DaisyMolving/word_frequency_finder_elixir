@@ -27,15 +27,15 @@ defmodule WordFrequencyFinderTest do
   test "prints top amount of words" do
     sorted_word_freq_list = [{"how", 4}, {"many", 2}, {"hello", 1}]
     assert capture_io(fn ->
-      WordFrequencyFinder.print_top_amount(sorted_word_freq_list)
+      WordFrequencyFinder.print_top_words(sorted_word_freq_list)
     end) == "how: 4\nmany: 2\nhello: 1\n"
   end
 
-  test "given large text and stop_words, prints final output" do
+  test "given large text, stop_words and top_amount, prints final output" do
     input_text = "There was a dragon dragon dragon dragon in a castle made of gold gold gold."
     stop_words = "a, there, was, in, who, of"
     assert capture_io(fn ->
-      WordFrequencyFinder.run_frequency_search(input_text, stop_words)
+      WordFrequencyFinder.run_frequency_search(input_text, stop_words, 20)
     end) == "dragon: 4\ngold: 3\nmade: 1\ncastle: 1\n"
   end
 

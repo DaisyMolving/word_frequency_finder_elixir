@@ -1,13 +1,13 @@
 defmodule WordFrequencyFinder do
 
-  def run_frequency_search(text, stop_words) do
+  def run_frequency_search(text, stop_words, amount_to_print) do
     split_words(text) 
     |> remove_stop_words(split_words(stop_words))
     |> tally_words
     |> Map.to_list
     |> sort_in_order_of_frequency
-    |> Enum.take(50)
-    |> print_top_amount
+    |> Enum.take(amount_to_print)
+    |> print_top_words
   end
 
   def split_words(text) do
@@ -38,10 +38,10 @@ defmodule WordFrequencyFinder do
     |> Enum.sort(fn({_, frequency_1}, {_, frequency_2}) -> frequency_1 > frequency_2 end)
   end
 
-  def print_top_amount([]), do: ""
-  def print_top_amount([{word, frequency} | next_word_and_frequency]) do
+  def print_top_words([]), do: ""
+  def print_top_words([{word, frequency} | next_word_and_frequency]) do
     IO.puts "#{word}: #{frequency}"
-    print_top_amount(next_word_and_frequency)
+    print_top_words(next_word_and_frequency)
   end
 
 end
